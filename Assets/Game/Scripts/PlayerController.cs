@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
             playerMovement.UpdateJumpAbort();
         }
 
-        // Crouch
+        // Crouch (Disabled)
         if (playerInput.isCrouchButtonDown())
         {
             playerMovement.Crouch();
@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour
             spriteRenderer.sprite = defaultSprite;
         }
 
+        // Restart if fall
         if (transform.position.y < -8f)
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);

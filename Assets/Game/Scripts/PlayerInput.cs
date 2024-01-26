@@ -15,9 +15,6 @@ public class PlayerInput : MonoBehaviour
     {
         // Input Telado
         float horizontalInput = Input.GetAxisRaw(InputConstants.HORIZONTAL);
-        // log
-        //Debug.Log("Horizontal Input: " + horizontalInput);
-
         return new Vector2(horizontalInput, 0);
     }
 
@@ -36,7 +33,8 @@ public class PlayerInput : MonoBehaviour
     public bool isCrouchButtonDown()
     {
         bool isKeyDownButtonDown = Input.GetKey(KeyCode.S);
-        return isKeyDownButtonDown;
+        // return isKeyDownButtonDown;
+        return false;
     }
 
     public bool isCrouchButtonUp()
