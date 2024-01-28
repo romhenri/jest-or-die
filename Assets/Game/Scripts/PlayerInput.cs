@@ -15,6 +15,7 @@ public class PlayerInput : MonoBehaviour
     {
         // Input Telado
         float horizontalInput = Input.GetAxisRaw(InputConstants.HORIZONTAL);
+
         return new Vector2(horizontalInput, 0);
     }
 

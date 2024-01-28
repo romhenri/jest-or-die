@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     SpriteRenderer spriteRenderer;
     PlayerInput playerInput;
 
+    public Animator animator;
+
     public Sprite defaultSprite;
     public Sprite crounchedSprite;
 
@@ -35,6 +37,13 @@ public class PlayerController : MonoBehaviour
         } else if (movementInput.x < 0)
         {
             spriteRenderer.flipX = true;
+        }
+        if (movementInput.x != 0)
+        {
+            animator.SetBool("isWalking", true);
+        } else
+        {
+            animator.SetBool("isWalking", false);
         }
 
         // Jump
