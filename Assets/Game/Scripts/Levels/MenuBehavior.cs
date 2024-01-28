@@ -8,6 +8,7 @@ public class MenuBehavior : MonoBehaviour
 {
     public string cena;
     public string cena2;
+    public string cena3;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +30,11 @@ public class MenuBehavior : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene(cena);
+    }
+
+    public void Cena3()
+    {
+        SceneManager.LoadScene(cena3);
     }
 
     public void QuitGame()
