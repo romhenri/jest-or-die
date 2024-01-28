@@ -9,17 +9,14 @@ public class Knife : MonoBehaviour
     public float rotation = 0f;
     public float speed = 1f;
 
-
     private Vector2 spawnPoint;
     private float timer = 0f;
-
 
     // Start is called before the first frame update
     void Start()
     {
         spawnPoint = new Vector2(transform.position.x, transform.position.y);
     }
-
 
     // Update is called once per frame
     void Update()
@@ -36,6 +33,14 @@ public class Knife : MonoBehaviour
         float x = timer * speed * transform.right.x;
         float y = timer * speed * transform.right.y;
         return new Vector2(x + spawnPoint.x, y + spawnPoint.y);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.name == "Player")
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
 

@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
 
     public Sprite defaultSprite;
-    public Sprite crounchedSprite;
+    //public Sprite crounchedSprite;
 
     void Start()
     {
@@ -28,8 +28,6 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 movementInput = playerInput.GetMovementInput();
         playerMovement.ProcessMovementInput(new Vector2(movementInput.x, 0));
-
-        //playerMovement.ProcessMovementInput(new Vector2(movementInput.x, 0));
 
         if (movementInput.x > 0)
         {
@@ -49,6 +47,8 @@ public class PlayerController : MonoBehaviour
         // Jump
         if (playerInput.isJumpButtonDown())
         {
+            Debug
+                .Log("Jump");
             playerMovement.Jump();
         }
         if (playerInput.isJumpButtonHeld() == false)
@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
         if (playerInput.isCrouchButtonDown())
         {
             playerMovement.Crouch();
-            spriteRenderer.sprite = crounchedSprite;
+            //spriteRenderer.sprite = crounchedSprite;
         }
         if (playerInput.isCrouchButtonDown() == false)
         {

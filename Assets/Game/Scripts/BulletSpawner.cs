@@ -6,33 +6,33 @@ public class BulletSpawner : MonoBehaviour
 {
     enum SpawnerType { Straight, Spin }
 
+    [Header("Spawner Attributes")]
+    [SerializeField] private SpawnerType spawnerType;
+    [SerializeField] private float firingRate = 1f;
+    [Space]
+
+    public bool moveHorizontal;
+    public bool moveVertical;
+    [Space]
+
+    public float spawnerLife;
+    [Range(1f, 10f)]
+    public float spawnerSpeed = 2f;
 
     [Header("Bullet Attributes")]
     public GameObject Knife;
     public float bulletLife = 1f;
     public float speed = 1f;
 
-    public bool moveHorizontal;  //a partir daqui eu to fazendo merda
-    public bool moveVertical;
-
-    public float spawnerLife;
-    public float spawnerSpeed; //aqui ja n sou mais eu
-
-
-    [Header("Spawner Attributes")]
-    [SerializeField] private SpawnerType spawnerType;
-    [SerializeField] private float firingRate = 1f;
-
-
     private GameObject spawnedBullet;
     private float timer = 0f;
     private float lifeTimer = 0f;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        spawnerSpeed = spawnerSpeed / 1000f;
     }
-
 
     // Update is called once per frame
     void Update()
@@ -46,7 +46,6 @@ public class BulletSpawner : MonoBehaviour
             timer = 0;
         }
         // a partir daqui eu to inventando moda
-
        
         if (moveHorizontal)
         {
@@ -58,7 +57,6 @@ public class BulletSpawner : MonoBehaviour
             if (lifeTimer > spawnerLife) Destroy(this.gameObject);
             transform.position += new Vector3(0f, spawnerSpeed, 0f);
         }
-
     }
 
 
