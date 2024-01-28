@@ -12,11 +12,11 @@ public class BulletSpawner : MonoBehaviour
     public float bulletLife = 1f;
     public float speed = 1f;
 
-    public bool moveLeft;
-    public bool moveRight;
+    public bool moveHorizontal;  //a partir daqui eu to fazendo merda
+    public bool moveVertical;
 
     public float spawnerLife;
-    public float spawnerSpeed;
+    public float spawnerSpeed; //aqui ja n sou mais eu
 
 
     [Header("Spawner Attributes")]
@@ -26,10 +26,11 @@ public class BulletSpawner : MonoBehaviour
 
     private GameObject spawnedBullet;
     private float timer = 0f;
+    private float lifeTimer = 0f;
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
 
@@ -37,12 +38,27 @@ public class BulletSpawner : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
+        lifeTimer += Time.deltaTime;
         if (spawnerType == SpawnerType.Spin) transform.eulerAngles = new Vector3(0f, 0f, transform.eulerAngles.z + 1f);
         if (timer >= firingRate)
         {
             Fire();
             timer = 0;
         }
+        // a partir daqui eu to inventando moda
+
+       
+        if (moveHorizontal)
+        {
+            if (lifeTimer > spawnerLife) Destroy(this.gameObject);
+            transform.position += new Vector3(spawnerSpeed, 0f, 0f);
+        }
+        if (moveVertical)
+        {
+            if (lifeTimer > spawnerLife) Destroy(this.gameObject);
+            transform.position += new Vector3(0f, spawnerSpeed, 0f);
+        }
+
     }
 
 
