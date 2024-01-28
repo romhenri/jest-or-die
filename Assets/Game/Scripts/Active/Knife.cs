@@ -5,47 +5,37 @@ using UnityEngine;
 
 public class Knife : MonoBehaviour
 {
-    [Range(0, 16)]
-    public float speed = 2;
-    float halfSpeed;
-    [Header("Mode")]
-    [Range(-2, 2)]
-    [SerializeField] int direction = 0;
+    public float bulletLife = 1f;  // Defines how long before the bullet is destroyed
+    public float rotation = 0f;
+    public float speed = 1f;
 
-    Vector3 movement;
 
+    private Vector2 spawnPoint;
+    private float timer = 0f;
+
+
+    // Start is called before the first frame update
     void Start()
     {
-        halfSpeed = speed / 2;
-        switch (direction)
-        {
-            case 0:
-                transform.Rotate(0, 0, 180f);
-                movement = new Vector3(0f, -(speed), 0f);
-                break;
-            case 1:
-                transform.Rotate(0, 0, 135f);
-                movement = new Vector3(-halfSpeed, -halfSpeed, 0f);
-                break;
-            case -1:
-                transform.Rotate(0, 0, -135f);
-                movement = new Vector3(halfSpeed, -halfSpeed, 0f);
-                break;
-            case 2:
-                transform.Rotate(0, 0, 90f);
-                movement = new Vector3(-(halfSpeed), 0f, 0f);
-                break;
-            case -2:
-                transform.Rotate(0, 0, -90f);
-                movement = new Vector3(halfSpeed, 0f, 0f);
-                break;
-            default:
-                break;
-        }
+        spawnPoint = new Vector2(transform.position.x, transform.position.y);
     }
 
+
+    // Update is called once per frame
     void Update()
     {
-        transform.position += movement * Time.deltaTime;
+        if (timer > bulletLife) Destroy(this.gameObject);
+        timer += Time.deltaTime;
+        transform.position = Movement(timer);
+    }
+
+
+    private Vector2 Movement(float timer)
+    {
+        // Moves right according to the bullet's rotation
+        float x = timer * speed * transform.right.x;
+        float y = timer * speed * transform.right.y;
+        return new Vector2(x + spawnPoint.x, y + spawnPoint.y);
     }
 }
+
