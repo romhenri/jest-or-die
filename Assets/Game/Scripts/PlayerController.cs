@@ -71,14 +71,21 @@ public class PlayerController : MonoBehaviour
         // Restart if fall
         if (transform.position.y < -8f)
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
     }
     public static void hit()
     {
-        Destroy(GameObject.Find("Player"));
-        Task.Delay(100);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        int children = GameObject.Find("Life").transform.childCount;
+
+        Destroy(GameObject.Find("Life").transform.GetChild(children - 1).gameObject);
+        
+        if (children == 1)
+        {
+            Destroy(GameObject.Find("Player"));
+            Task.Delay(100);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 }
