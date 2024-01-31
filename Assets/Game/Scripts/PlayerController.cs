@@ -49,8 +49,6 @@ public class PlayerController : MonoBehaviour
         // Jump
         if (playerInput.isJumpButtonDown())
         {
-            Debug
-                .Log("Jump");
             playerMovement.Jump();
         }
         if (playerInput.isJumpButtonHeld() == false)
