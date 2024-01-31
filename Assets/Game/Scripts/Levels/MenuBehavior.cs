@@ -6,42 +6,27 @@ using UnityEngine.UI;
 
 public class MenuBehavior : MonoBehaviour
 {
-    public string cena;
-    public string cena2;
-    public string cena3;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public string scene;
+    public string scene2;
+    public string scene3;
 
     public void Options()
     {
-        SceneManager.LoadScene(cena2); //Deletar ao iplementar opções
+        SceneManager.LoadScene(scene2);
     }
 
     public void StartGame()
     {
-        SceneManager.LoadScene(cena);
+        SceneManager.LoadScene(scene);
     }
 
     public void Cena3()
     {
-        SceneManager.LoadScene(cena3);
+        SceneManager.LoadScene(scene3);
     }
 
     public void QuitGame()
     {
-        //No Editor use a linha de código abaixo e comente a outra
-        //UnityEditor.EditorApplication.isPlaying = false;
-        //quando o jogo for compilado use a linha de código abaixo e comente a outra
         Application.Quit();
     }
 }
