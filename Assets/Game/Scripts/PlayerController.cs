@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Platformer2D.Character;
+using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
 
 [RequireComponent(typeof(CharacterMovement2D))]
 [RequireComponent(typeof(SpriteRenderer))]
@@ -73,5 +75,12 @@ public class PlayerController : MonoBehaviour
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
         }
+
+    }
+    public static void hit()
+    {
+        Destroy(GameObject.Find("Player"));
+        Task.Delay(100);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

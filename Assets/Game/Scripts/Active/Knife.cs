@@ -40,6 +40,7 @@ public class Knife : MonoBehaviour
         if (collision.gameObject.name == "Player")
         {
             Destroy(this.gameObject);
+            PlayerController.hit();
         }
     }
 }
