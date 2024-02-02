@@ -15,6 +15,10 @@ public class BulletSpawner : MonoBehaviour
     public bool moveVertical;
     [Space]
 
+    public float limitTop = 5f;
+    bool isToTop = true;
+
+    [Space]
     public float spawnerLife;
     [Range(1f, 10f)]
     public float spawnerSpeed = 2f;
@@ -45,8 +49,8 @@ public class BulletSpawner : MonoBehaviour
             Fire();
             timer = 0;
         }
-        // a partir daqui eu to inventando moda
-       
+
+        // Movem system
         if (moveHorizontal)
         {
             if (lifeTimer > spawnerLife) Destroy(this.gameObject);
@@ -55,7 +59,20 @@ public class BulletSpawner : MonoBehaviour
         if (moveVertical)
         {
             if (lifeTimer > spawnerLife) Destroy(this.gameObject);
-            transform.position += new Vector3(0f, spawnerSpeed, 0f);
+
+            if (transform.position.y > limitTop)
+            {
+                isToTop = false;
+            }
+            
+            if (isToTop)
+            {
+                transform.position += new Vector3(0f, spawnerSpeed, 0f);
+            }
+            else
+            {
+                transform.position -= new Vector3(0f, spawnerSpeed, 0f);
+            }
         }
     }
 
