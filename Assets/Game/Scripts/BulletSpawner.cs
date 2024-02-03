@@ -5,28 +5,30 @@ using UnityEngine;
 public class BulletSpawner : MonoBehaviour
 {
     enum SpawnerType { Straight, Spin }
+    enum FlowType { Const, Fluct }
 
     [Header("Spawner Attributes")]
     [SerializeField] private SpawnerType spawnerType;
-    [SerializeField] private float firingRate = 1f;
+    [SerializeField] private FlowType flowType;
+    [SerializeField] private float firingRate = 0.5f;
     [Space]
 
     public bool moveHorizontal;
-    public bool moveVertical;
+    public bool moveVertical = true;
     [Space]
 
-    public float limitTop = 5f;
+    public float limitTop = 15f;
     bool isToTop = true;
 
     [Space]
-    public float spawnerLife;
+    public float spawnerLife = 100;
     [Range(1f, 10f)]
-    public float spawnerSpeed = 2f;
+    public float spawnerSpeed = 3f;
 
     [Header("Bullet Attributes")]
     public GameObject Knife;
-    public float bulletLife = 1f;
-    public float speed = 1f;
+    public float bulletLife = 5f;
+    public float speed = 9f;
 
     private GameObject spawnedBullet;
     private float timer = 0f;
@@ -43,11 +45,26 @@ public class BulletSpawner : MonoBehaviour
     {
         timer += Time.deltaTime;
         lifeTimer += Time.deltaTime;
+
+        // Spawner rotation
         if (spawnerType == SpawnerType.Spin) transform.eulerAngles = new Vector3(0f, 0f, transform.eulerAngles.z + 1f);
-        if (timer >= firingRate)
+
+        // Firing system
+        if (flowType == FlowType.Const)
         {
-            Fire();
-            timer = 0;
+            if (timer >= firingRate)
+            {
+                Fire();
+                timer = 0;
+            }
+        }
+        else
+        {
+            if (timer >= firingRate * 2)
+            {
+                Fire();
+                timer = Random.Range(0f, firingRate);
+            }
         }
 
         // Movem system

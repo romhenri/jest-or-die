@@ -44,8 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f45d48d5ebb20064faf3dffe6aaba684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Knife: {fileID: 800075602994584549, guid: 16cc85ed916eb4d4d8b99db31adea3d1, type: 3}
-  bulletLife: 1
-  speed: 1
   spawnerType: 0
-  firingRate: 1
+  flowType: 1
+  firingRate: 0.5
+  moveHorizontal: 0
+  moveVertical: 1
+  limitTop: 15
+  spawnerLife: 100
+  spawnerSpeed: 3
+  Knife: {fileID: 800075602994584549, guid: 16cc85ed916eb4d4d8b99db31adea3d1, type: 3}
+  bulletLife: 5
+  speed: 9
