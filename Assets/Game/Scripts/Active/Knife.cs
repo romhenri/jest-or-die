@@ -26,22 +26,12 @@ public class Knife : MonoBehaviour
         transform.position = Movement(timer);
     }
 
-
     private Vector2 Movement(float timer)
     {
         // Moves right according to the bullet's rotation
         float x = timer * speed * transform.right.x;
         float y = timer * speed * transform.right.y;
         return new Vector2(x + spawnPoint.x, y + spawnPoint.y);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.name == "Player")
-        {
-            Destroy(this.gameObject);
-            PlayerController.hit();
-        }
     }
 }
 

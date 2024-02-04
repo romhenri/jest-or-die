@@ -10,14 +10,19 @@ using System.Threading.Tasks;
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour
 {
+    public Sprite defaultSprite;
+
     CharacterMovement2D playerMovement;
     SpriteRenderer spriteRenderer;
     PlayerInput playerInput;
 
     public Animator animator;
-
-    public Sprite defaultSprite;
+    public HudManager hudManager;
     //public Sprite crounchedSprite;
+
+    private int _lives = 3;
+    // This is a property that can be accessed from other scripts but not modified
+    public int Lives { get => _lives; }
 
     void Start()
     {
@@ -75,17 +80,25 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-    public static void hit()
-    {
-        int children = GameObject.Find("Life").transform.childCount;
 
-        Destroy(GameObject.Find("Life").transform.GetChild(children - 1).gameObject);
-        
-        if (children == 1)
+    public void ReceiveDamage()
+    {
+        _lives--;
+        if (_lives <= 0)
         {
-            Destroy(GameObject.Find("Player"));
-            Task.Delay(100);
+            // Game Over
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        hudManager.DecreaseLives();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision == null) return;
+        if (collision.gameObject.tag == "Knife")
+        {
+            Destroy(collision.gameObject);
+            ReceiveDamage();
         }
     }
 }
