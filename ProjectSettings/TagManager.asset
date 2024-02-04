@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Coin
   - Knife
+  - Spawner
   layers:
   - Default
   - TransparentFX

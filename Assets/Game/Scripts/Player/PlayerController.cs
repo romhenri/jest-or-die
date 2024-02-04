@@ -18,9 +18,11 @@ public class PlayerController : MonoBehaviour
 
     public Animator animator;
     public HudManager hudManager;
+    public CanvasController canvasController;
     //public Sprite crounchedSprite;
 
     private int _lives = 3;
+    private int _coins = 0;
     // This is a property that can be accessed from other scripts but not modified
     public int Lives { get => _lives; }
 
@@ -99,6 +101,16 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(collision.gameObject);
             ReceiveDamage();
+        }
+        if (collision.gameObject.tag == "Coin")
+        {
+            Destroy(collision.gameObject);
+            _coins++;
+
+            if (_coins == 4)
+            {
+                canvasController.SetWinScreen();
+            }
         }
     }
 }
