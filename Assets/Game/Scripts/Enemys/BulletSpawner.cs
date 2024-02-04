@@ -17,7 +17,7 @@ public class BulletSpawner : MonoBehaviour
     public bool moveVertical = true;
     [Space]
 
-    public float limitTop = 15f;
+    public float limitTop = 10f;
     bool isToTop = true;
 
     [Space]
@@ -38,6 +38,7 @@ public class BulletSpawner : MonoBehaviour
     void Start()
     {
         spawnerSpeed = spawnerSpeed / 1000f;
+        spawnerSpeed = spawnerSpeed * 105;
     }
 
     // Update is called once per frame
@@ -71,7 +72,7 @@ public class BulletSpawner : MonoBehaviour
         if (moveHorizontal)
         {
             if (lifeTimer > spawnerLife) Destroy(this.gameObject);
-            transform.position += new Vector3(spawnerSpeed, 0f, 0f);
+            transform.position += new Vector3(spawnerSpeed * Time.deltaTime, 0f, 0f);
         }
         if (moveVertical)
         {
@@ -84,11 +85,11 @@ public class BulletSpawner : MonoBehaviour
             
             if (isToTop)
             {
-                transform.position += new Vector3(0f, spawnerSpeed, 0f);
+                transform.position += new Vector3(0f, spawnerSpeed * Time.deltaTime, 0f);
             }
             else
             {
-                transform.position -= new Vector3(0f, spawnerSpeed, 0f);
+                transform.position -= new Vector3(0f, spawnerSpeed * Time.deltaTime, 0f);
             }
         }
     }

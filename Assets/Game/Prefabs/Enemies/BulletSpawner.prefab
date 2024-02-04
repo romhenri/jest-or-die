@@ -49,7 +49,7 @@ MonoBehaviour:
   firingRate: 0.5
   moveHorizontal: 0
   moveVertical: 1
-  limitTop: 15
+  limitTop: 10
   spawnerLife: 100
   spawnerSpeed: 3
   Knife: {fileID: 800075602994584549, guid: 16cc85ed916eb4d4d8b99db31adea3d1, type: 3}
