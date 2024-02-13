@@ -19,6 +19,12 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public HudManager hudManager;
     public CanvasController canvasController;
+
+    [Header("Audio")]
+    public AudioSource AudioSource;
+    public AudioClip audioJump;
+    public AudioClip audioHurt;
+    public AudioClip audioGet;
     //public Sprite crounchedSprite;
 
     private int _lives = 3;
@@ -57,6 +63,7 @@ public class PlayerController : MonoBehaviour
         if (playerInput.isJumpButtonDown())
         {
             playerMovement.Jump();
+            AudioSource.PlayOneShot(audioJump);
         }
         if (playerInput.isJumpButtonHeld() == false)
         {
@@ -86,6 +93,7 @@ public class PlayerController : MonoBehaviour
     public void ReceiveDamage()
     {
         _lives--;
+        AudioSource.PlayOneShot(audioHurt);
         if (_lives <= 0)
         {
             // Game Over
@@ -105,6 +113,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Coin")
         {
             Destroy(collision.gameObject);
+            AudioSource.PlayOneShot(audioGet);
             _coins++;
 
             if (_coins == 4)
