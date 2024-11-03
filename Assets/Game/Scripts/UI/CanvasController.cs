@@ -8,6 +8,8 @@ public class CanvasController : MonoBehaviour
     public GameObject WinScreen;
     public GameObject PauseScreen;
 
+    public string winScreenTargetScene = "MainMenu";
+
     void Start()
     {
         Timer.instance.StartTimer();
@@ -41,7 +43,7 @@ public class CanvasController : MonoBehaviour
         // Continue after win screen (Space or Enter)
         if (WinScreen.activeSelf && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)))
         {
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene(winScreenTargetScene);
         }
     }
 
