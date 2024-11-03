@@ -10,6 +10,7 @@ public class CanvasController : MonoBehaviour
 
     void Start()
     {
+        Timer.instance.StartTimer();
     }
 
     void Update()
@@ -47,7 +48,8 @@ public class CanvasController : MonoBehaviour
     public void SetWinScreen()
     {
         WinScreen.SetActive(true);
-        
+        Timer.instance.StopTimer();
+
         // Stop all spawners
         GameObject[] spawners = GameObject.FindGameObjectsWithTag("Spawner");
         foreach (GameObject spawner in spawners)
@@ -65,6 +67,7 @@ public class CanvasController : MonoBehaviour
     public void SetPauseScreen()
     {
         PauseScreen.SetActive(true);
+        Timer.instance.StopTimer();
         Time.timeScale = 0;
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>().Pause();
     }
@@ -72,6 +75,7 @@ public class CanvasController : MonoBehaviour
     public void UnsetPauseScreen()
     {
         PauseScreen.SetActive(false);
+        Timer.instance.ResetTimer();
         Time.timeScale = 1;
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>().Play();
     }
