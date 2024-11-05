@@ -5011,6 +5011,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WinScreen: {fileID: 1315582949}
   PauseScreen: {fileID: 1242421290}
+  winScreenTargetScene: MainMenu
 --- !u!1 &1612142922
 GameObject:
   m_ObjectHideFlags: 0
