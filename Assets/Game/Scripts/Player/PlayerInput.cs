@@ -33,14 +33,13 @@ public class PlayerInput : MonoBehaviour
 
     public bool isCrouchButtonDown()
     {
-        bool isKeyDownButtonDown = Input.GetKey(KeyCode.S);
-        // return isKeyDownButtonDown;
-        return false;
+        bool isKeyDownButtonDown = Input.GetKey(KeyCode.LeftControl);
+        return isKeyDownButtonDown;
     }
 
     public bool isCrouchButtonUp()
     {
-        bool isKeyDownButtonUp = Input.GetKey(KeyCode.S) == false;
+        bool isKeyDownButtonUp = Input.GetKey(KeyCode.LeftControl) == false;
         return isKeyDownButtonUp;
     }
 }

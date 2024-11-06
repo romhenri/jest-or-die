@@ -70,16 +70,17 @@ public class PlayerController : MonoBehaviour
             playerMovement.UpdateJumpAbort();
         }
 
-        // Crouch (Disabled)
+        // Crouch
         if (playerInput.isCrouchButtonDown())
         {
+            animator.SetBool("isCrounched", true);
             playerMovement.Crouch();
-            //spriteRenderer.sprite = crounchedSprite;
         }
         if (playerInput.isCrouchButtonDown() == false)
         {
+            animator.SetBool("isCrounched", false);
             playerMovement.UnCrouch();
-            spriteRenderer.sprite = defaultSprite;
+            //spriteRenderer.sprite = defaultSprite;
         }
 
         // Restart if fall
