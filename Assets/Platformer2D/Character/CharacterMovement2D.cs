@@ -20,7 +20,7 @@ namespace Platformer2D.Character
         [SerializeField] float crouchCapsuleHeightPercent = 0.5f;
 
         [Range(0.0f, 1.0f)]
-        [SerializeField] float crouchGroundSpeedPercent = 0.3f;
+        [SerializeField] float crouchGroundSpeedPercent = 0.01f;
 
         [Space]
 

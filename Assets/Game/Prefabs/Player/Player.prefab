@@ -183,7 +183,7 @@ MonoBehaviour:
   jumpPeakTime: 0.4
   jumpAbortDecceleration: 100
   crouchCapsuleHeightPercent: 0.5
-  crouchGroundSpeedPercent: 0.3
+  crouchGroundSpeedPercent: 0.01
   groundedLayerMask:
     serializedVersion: 2
     m_Bits: 256
