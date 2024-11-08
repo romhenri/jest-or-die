@@ -11,11 +11,11 @@ public class PlayerInput : MonoBehaviour
         public const string JUMP = "Jump";
         public const string CROUCH = "Crouch";
     }
+
     public Vector2 GetMovementInput()
     {
         // Input Telado
         float horizontalInput = Input.GetAxisRaw(InputConstants.HORIZONTAL);
-
         return new Vector2(horizontalInput, 0);
     }
 
@@ -41,5 +41,10 @@ public class PlayerInput : MonoBehaviour
     {
         bool isKeyDownButtonUp = Input.GetKey(KeyCode.LeftControl) == false;
         return isKeyDownButtonUp;
+    }
+
+    public bool isDescendButtonHeld()
+    {
+        return Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S);
     }
 }
