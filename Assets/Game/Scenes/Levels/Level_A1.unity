@@ -5208,6 +5208,10 @@ PrefabInstance:
       propertyPath: canvasController
       value: 
       objectReference: {fileID: 1610660739}
+    - target: {fileID: 9017693092580302854, guid: d85f27e5483eb5046af1c2346acf9114, type: 3}
+      propertyPath: crouchGroundSpeedPercent
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

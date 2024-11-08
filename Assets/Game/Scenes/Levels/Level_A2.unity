@@ -5228,7 +5228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WinScreen: {fileID: 1315582949}
   PauseScreen: {fileID: 1242421290}
-  winScreenTargetScene: MainMenu
+  winScreenTargetScene: Level_A3
 --- !u!1 &1612142922
 GameObject:
   m_ObjectHideFlags: 0
@@ -5382,7 +5382,7 @@ PrefabInstance:
       objectReference: {fileID: 1610660739}
     - target: {fileID: 9017693092580302854, guid: d85f27e5483eb5046af1c2346acf9114, type: 3}
       propertyPath: crouchGroundSpeedPercent
-      value: 0.01
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
