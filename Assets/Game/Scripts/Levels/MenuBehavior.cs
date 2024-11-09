@@ -20,7 +20,7 @@ public class MenuBehavior : MonoBehaviour
     [Header("UI")]
     [SerializeField] public GameObject mainMenu;
     [SerializeField] public GameObject levelSelection;
-
+    [SerializeField] public GameObject aboutGame;
 
     public void StartGame()
     {
@@ -44,14 +44,23 @@ public class MenuBehavior : MonoBehaviour
 
     public void UI_MainMenu()
     {
-        levelSelection.SetActive(false);
         mainMenu.SetActive(true);
+        aboutGame.SetActive(false);
+        levelSelection.SetActive(false);
     }
 
     public void UI_LevelSelection() 
     {
         mainMenu.SetActive(false);
+        aboutGame.SetActive(false);
         levelSelection.SetActive(true);
+    }
+
+    public void UI_AboutGame()
+    {
+        mainMenu.SetActive(false);
+        aboutGame.SetActive(true);
+        levelSelection.SetActive(false);
     }
 
     public void Level1()
