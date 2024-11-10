@@ -9,6 +9,7 @@ public class CanvasController : MonoBehaviour
     public GameObject PauseScreen;
 
     public string winScreenTargetScene = "MainMenu";
+    public int level = -1;
 
     void Start()
     {
@@ -51,6 +52,12 @@ public class CanvasController : MonoBehaviour
     {
         WinScreen.SetActive(true);
         Timer.instance.StopTimer();
+
+        int _level = GameController.instance.GetLevel();
+        if (level > _level)
+        {
+            GameController.instance.SetLevel(level);
+        }
 
         // Stop all spawners
         GameObject[] spawners = GameObject.FindGameObjectsWithTag("Spawner");

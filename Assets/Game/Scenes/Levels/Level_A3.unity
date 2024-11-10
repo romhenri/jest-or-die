@@ -6721,6 +6721,7 @@ MonoBehaviour:
   WinScreen: {fileID: 1315582949}
   PauseScreen: {fileID: 1242421290}
   winScreenTargetScene: MainMenu
+  level: 3
 --- !u!1 &1612142922
 GameObject:
   m_ObjectHideFlags: 0
