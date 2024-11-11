@@ -31,6 +31,18 @@ public class PlayerInput : MonoBehaviour
         return isKeyDownButtonHeld;
     }
 
+    public bool isSpinButtonDown()
+    {
+        bool isSpinButtonDown = Input.GetKeyDown(KeyCode.F);
+        return isSpinButtonDown;
+    }
+
+    public bool isSpinButtonHeld()
+    {
+        bool isSpinButtonHeld = Input.GetKey(KeyCode.F);
+        return isSpinButtonHeld;
+    }
+
     public bool isCrouchButtonDown()
     {
         bool isKeyDownButtonDown = Input.GetKey(KeyCode.LeftControl);

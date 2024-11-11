@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     public float downwardForce = 10f;
 
     private bool isDroppingThroughPlatform = false;
+    private bool isSpinning = false;
 
     void Start()
     {
@@ -58,6 +59,14 @@ public class PlayerController : MonoBehaviour
         HandleMovement();
         HandleJump();
         HandleCrouch();
+        HandleSpin();
+
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        if (isSpinning && stateInfo.IsName("SpinAnimation") && stateInfo.normalizedTime >= 1.0f)
+        {
+            isSpinning = false;
+            animator.SetBool("isSpinning", false);
+        }
 
         if (transform.position.y < -8f)
         {
@@ -107,6 +116,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void HandleSpin()
+    {
+        if (playerInput.isSpinButtonHeld())
+        {
+            isSpinning = true;
+            animator.SetBool("isSpinning", true);
+        }
+
+        if (!playerInput.isSpinButtonHeld())
+        {
+            isSpinning = false;
+            animator.SetBool("isSpinning", false);
+        }
+    }
+
     private IEnumerator DropThroughPlatform()
     {
         Rigidbody2D rb = playerMovement?.GetComponent<Rigidbody2D>();
@@ -138,8 +162,19 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Knife"))
         {
-            Destroy(collision.gameObject);
-            ReceiveDamage();
+            if (isSpinning)
+            {
+                Collider2D knifeCollider = collision.gameObject.GetComponent<Collider2D>();
+                if (knifeCollider != null)
+                {
+                    knifeCollider.enabled = false;
+                }
+            }
+            else
+            {
+                Destroy(collision.gameObject);
+                ReceiveDamage();
+            }
         }
 
         if (collision.gameObject.CompareTag("Coin"))

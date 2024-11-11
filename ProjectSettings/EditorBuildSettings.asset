@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Game/Scenes/PreLevels/PreLvl_A1.unity
     guid: 77d3497b6c7c2844bbc0cbe41ed44149
   - enabled: 1
+    path: Assets/Game/Scenes/PreLevels/PreLvl_A2.unity
+    guid: 79fdd11a788317e49ac19009aab3e64f
+  - enabled: 1
     path: Assets/Game/Scenes/Levels/Level_A1.unity
     guid: 2f134553368a43a4a847a42bb8e140b6
   - enabled: 1
