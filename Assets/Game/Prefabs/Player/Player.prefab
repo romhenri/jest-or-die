@@ -204,10 +204,14 @@ MonoBehaviour:
   animator: {fileID: 7853993481712525052}
   hudManager: {fileID: 0}
   canvasController: {fileID: 0}
+  blood: {fileID: 2969109559910344869, guid: 8351ac7e73ace1b409c5e99aeb0c4099, type: 3}
   AudioSource: {fileID: 7541222589396991267}
   audioJump: {fileID: 8300000, guid: 4c6a6c7193b3a194683177bc93586935, type: 3}
   audioHurt: {fileID: 8300000, guid: c8cf54981ae997d47b30b492b47e172d, type: 3}
   audioGet: {fileID: 8300000, guid: ba79acb2cfa34934baa90ca00b6d0f3d, type: 3}
+  currentPlatformEffector: {fileID: 0}
+  dropWaitTime: 0.2
+  downwardForce: 10
 --- !u!95 &7853993481712525052
 Animator:
   serializedVersion: 5
