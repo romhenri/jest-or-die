@@ -5,37 +5,32 @@ using UnityEngine;
 public class Vase : MonoBehaviour
 {
     private Animator animator;
+    private Collider2D collider;
 
-    // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        collider = GetComponent<Collider2D>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Collision with vase");
         TriggerBreakAnimation();
 
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Debug.Log("Player collided with vase");
-        }
-
+        collider.enabled = false;
     }
 
     void TriggerBreakAnimation()
     {
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.simulated = false;
+        }
+
         animator.SetTrigger("Break");
     }
 
-    // Este método será chamado pelo evento de animação
     public void OnBreakAnimationEnd()
     {
         Destroy(gameObject);
