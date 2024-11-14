@@ -18,6 +18,9 @@ public class PlayerController : MonoBehaviour
     public HudManager hudManager;
     public CanvasController canvasController;
 
+    [Header("Partciles")]
+    public GameObject blood;
+
     [Header("Audio")]
     public AudioSource AudioSource;
     public AudioClip audioJump;
@@ -193,6 +196,9 @@ public class PlayerController : MonoBehaviour
     public void ReceiveDamage()
     {
         _lives--;
+
+        Instantiate(blood, transform.position, Quaternion.identity);
+
         AudioSource.PlayOneShot(audioHurt);
         hudManager.DecreaseLives();
 
@@ -202,4 +208,5 @@ public class PlayerController : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
+
 }
