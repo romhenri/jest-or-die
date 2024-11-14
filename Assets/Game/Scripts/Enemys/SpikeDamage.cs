@@ -2,20 +2,55 @@ using UnityEngine;
 
 public class SpikeDamage : MonoBehaviour
 {
-    public int damage = 1; // Quantidade de dano que o espinho causa (ajuste conforme necessário)
+    public int damage = 1;
+    public bool active = true;
+    public bool isLooping = false;
+    public float timing = 1.0f;
+
+    private Animator animator;
+    private Collider2D spikeCollider;
+    private float timer;
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+        spikeCollider = GetComponent<Collider2D>();
+
+        if (isLooping)
+        {
+            timer = timing;
+        }
+        UpdateSpikeState();
+    }
+
+    private void Update()
+    {
+        if (isLooping)
+        {
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+            {
+                active = !active;
+                UpdateSpikeState();
+                timer = timing;
+            }
+        }
+    }
+
+    private void UpdateSpikeState()
+    {
+        // Atualiza o estado de animação e colisão
+        animator.SetBool("isActive", active);
+        spikeCollider.enabled = active;
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Verifica se o objeto que colidiu é o jogador, comparando a tag
-        if (other.CompareTag("Player"))
+        if (active && other.CompareTag("Player"))
         {
-            // Obtém o componente PlayerController do jogador
             var playerController = other.GetComponent<PlayerController>();
-
-            // Se o jogador tem o componente PlayerController, aplica o dano
             if (playerController != null)
             {
-                // Chama a função ReceiveDamage no jogador
                 playerController.ReceiveDamage();
             }
         }
