@@ -18,8 +18,9 @@ public class PlayerController : MonoBehaviour
     public HudManager hudManager;
     public CanvasController canvasController;
 
-    [Header("Partciles")]
+    [Header("Particles")]
     public GameObject blood;
+    public GameObject collectParticles;
 
     [Header("Audio")]
     public AudioSource AudioSource;
@@ -63,6 +64,7 @@ public class PlayerController : MonoBehaviour
         HandleJump();
         HandleCrouch();
         HandleSpin();
+        HandleFalling();
 
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         if (isSpinning && stateInfo.IsName("SpinAnimation") && stateInfo.normalizedTime >= 1.0f)
@@ -88,15 +90,23 @@ public class PlayerController : MonoBehaviour
 
     private void HandleJump()
     {
+
         if (playerInput.isJumpButtonDown())
         {
+            animator.SetBool("isJumping", true);
             playerMovement.Jump();
             AudioSource.PlayOneShot(audioJump);
+        }
+
+        if (!playerMovement.IsJumping)
+        {
+            animator.SetBool("isJumping", false);
         }
 
         if (!playerInput.isJumpButtonHeld())
         {
             playerMovement.UpdateJumpAbort();
+            animator.SetBool("isJumping", false);
         }
     }
 
@@ -104,8 +114,9 @@ public class PlayerController : MonoBehaviour
     {
         if (playerInput.isCrouchButtonDown())
         {
-            animator.SetBool("isCrounched", true);
             playerMovement.Crouch();
+            isSpinning = false;
+            animator.SetBool("isCrounched", true);
 
             if (currentPlatformEffector != null && playerInput.isDescendButtonHeld() && !isDroppingThroughPlatform)
             {
@@ -127,10 +138,20 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isSpinning", true);
         }
 
-        if (!playerInput.isSpinButtonHeld())
+        if (!playerInput.isSpinButtonHeld() || playerInput.isCrouchButtonDown())
         {
             isSpinning = false;
             animator.SetBool("isSpinning", false);
+        }
+    }
+    private void HandleFalling()
+    {
+        if (!playerMovement.IsGrounded)
+        {
+            animator.SetBool("isFalling", true);
+        } else
+        {
+            animator.SetBool("isFalling", false);
         }
     }
 
@@ -175,6 +196,9 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                Vector2 contactPoint = collision.contacts[0].point;
+                SpawnBlood(contactPoint);
+
                 Destroy(collision.gameObject);
                 ReceiveDamage();
             }
@@ -182,6 +206,11 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Coin"))
         {
+            if (collectParticles != null)
+            {
+                Instantiate(collectParticles, collision.transform.position, Quaternion.identity);
+            }
+
             Destroy(collision.gameObject);
             AudioSource.PlayOneShot(audioGet);
             _coins++;
@@ -193,20 +222,41 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void SpawnBlood(Vector2 position)
+    {
+        if (blood != null)
+        {
+            Instantiate(blood, position, Quaternion.identity);
+        }
+    }
+
     public void ReceiveDamage()
     {
         _lives--;
 
-        Instantiate(blood, transform.position, Quaternion.identity);
-
         AudioSource.PlayOneShot(audioHurt);
         hudManager.DecreaseLives();
+
+        StartCoroutine(FlashDamageColor());
 
         if (_lives <= 0)
         {
             // Game Over
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+    }
+
+    private IEnumerator FlashDamageColor()
+    {
+        Color originalColor = spriteRenderer.color;
+
+        Color damageColor = new Color(1f, 0.8f, 0.8f, originalColor.a);
+
+        spriteRenderer.color = damageColor;
+
+        yield return new WaitForSeconds(0.2f);
+
+        spriteRenderer.color = originalColor;
     }
 
 }
