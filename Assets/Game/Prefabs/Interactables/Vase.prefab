@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 370555937, guid: 743200ca3abd5964eb5e80582d66e441, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -123,7 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coinPrefab: {fileID: 9054984904760433314, guid: 6ad02154904458b4d9b2952be28dbb57, type: 3}
   bombPrefab: {fileID: 0}
-  coinChance: 0.5
+  coinChance: 0.2
   bombChance: 0.2
 --- !u!61 &4744277798305723271
 BoxCollider2D:

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Vase : MonoBehaviour
 {
     private Animator animator;
-    private Collider2D collider;
+    private Collider2D vaseCollider;
     private AudioSource audioSource;
 
     [SerializeField] private GameObject coinPrefab;
@@ -17,7 +17,7 @@ public class Vase : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        collider = GetComponent<Collider2D>();
+        vaseCollider = GetComponent<Collider2D>();
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -29,7 +29,7 @@ public class Vase : MonoBehaviour
         )
         {
             TriggerBreakAnimation();
-            collider.enabled = false;
+            vaseCollider.enabled = false;
         }
     }
 
