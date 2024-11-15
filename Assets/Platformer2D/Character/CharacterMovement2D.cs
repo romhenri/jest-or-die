@@ -33,7 +33,7 @@ namespace Platformer2D.Character
         ContactFilter2D contactFilter;
 
         public IColliderInfo ColliderInfo { get; private set; }
-        bool isGrounded;
+        bool isGrounded = true;
         bool isCrouching;
         bool wantsToUnCrouch;
         bool wasGroundedLastFrame;
@@ -116,7 +116,7 @@ namespace Platformer2D.Character
             currentVelocity.y = Mathf.Max(currentVelocity.y - Gravity * Time.fixedDeltaTime, maxFallSpeed);
         }
 
-        protected bool CanJump()
+        public bool CanJump()
         {
             return IsGrounded && !IsJumping && !IsCrouching;
         }
