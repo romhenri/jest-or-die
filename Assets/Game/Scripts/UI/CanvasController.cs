@@ -10,6 +10,7 @@ public class CanvasController : MonoBehaviour
 
     public string winScreenTargetScene;
     public int level = -1;
+    public int coinsAvailable = 4;
 
     void Start()
     {
@@ -101,6 +102,8 @@ public class CanvasController : MonoBehaviour
             {
                 GameController.instance.SetLevel(level);
             }
+            GameController.instance.IncreaseCoins(coinsAvailable);
+            //GameController.instance.SaveNow();
         }
         else
         {

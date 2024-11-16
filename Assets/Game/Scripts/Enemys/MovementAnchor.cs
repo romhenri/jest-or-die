@@ -35,10 +35,6 @@ public class MovementAnchor : MonoBehaviour
             SetTargetPosition();
             time = 0f;
         }
-        else
-        {
-            Debug.LogWarning("A lista de movimentos esta vazia. Adicione movimentos no Inspector.");
-        }
     }
 
     void Update()
