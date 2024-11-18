@@ -6751,7 +6751,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WinScreen: {fileID: 1315582949}
   PauseScreen: {fileID: 1242421290}
-  winScreenTargetScene: PreLvl_A2
+  winScreenTargetScene: MainMenu
+  levelSelectionScene: MainMenu
   level: 1
   coinsAvailable: 4
 --- !u!1 &1612142922

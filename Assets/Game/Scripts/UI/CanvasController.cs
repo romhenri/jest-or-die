@@ -63,7 +63,7 @@ public class CanvasController : MonoBehaviour
             SetWinScreen();
         }
 
-        // Current Win Screen (Space, Enter, Esc)
+        // Current Win Screen (Space, Enter, Tab)
         if (WinScreen != null && WinScreen.activeSelf)
         {
             // Next Scene
@@ -78,9 +78,17 @@ public class CanvasController : MonoBehaviour
                     Debug.LogWarning("winScreenTargetScene não foi atribuído.");
                 }
             }
-            // Phase Selection
-            else if (Input.GetKeyDown(KeyCode.Escape))
+        }
+
+        // Phase Selection
+        if (
+            (PauseScreen != null && PauseScreen.activeSelf) ||
+            (WinScreen != null && WinScreen.activeSelf)
+          )  
+        {
+            if (Input.GetKeyDown(KeyCode.Tab))
             {
+                UnsetPauseScreen();
                 SceneManager.LoadScene(levelSelectionScene);
             }
         }

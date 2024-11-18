@@ -53,6 +53,17 @@ public class GameController : MonoBehaviour
     public void ToggleSounds()
     {
         sounds = !sounds;
+        ApplySoundSettings();
+    }
+
+    public bool GetSoundsEnabled()
+    {
+        return sounds;
+    }
+
+    public void ApplySoundSettings()
+    {
+        AudioListener.volume = sounds ? 1f : 0f;
     }
 
     [Serializable]

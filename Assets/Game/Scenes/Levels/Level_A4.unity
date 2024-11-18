@@ -7536,6 +7536,7 @@ MonoBehaviour:
   WinScreen: {fileID: 1315582949}
   PauseScreen: {fileID: 1242421290}
   winScreenTargetScene: MainMenu
+  levelSelectionScene: MainMenu
   level: 4
   coinsAvailable: 4
 --- !u!1 &1612142922
