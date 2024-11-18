@@ -9,6 +9,8 @@ public class CanvasController : MonoBehaviour
     public GameObject PauseScreen;
 
     public string winScreenTargetScene;
+    public string levelSelectionScene;
+
     public int level = -1;
     public int coinsAvailable = 4;
 
@@ -26,37 +28,60 @@ public class CanvasController : MonoBehaviour
 
     void Update()
     {
-        // Toggle pause screen
+        // Pause Screen (Esc, P)
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
         {
-            if (PauseScreen != null && PauseScreen.activeSelf)
+            if (WinScreen != null && WinScreen.activeSelf)
             {
-                if (WinScreen != null && WinScreen.activeSelf)
-                {
-                    return;
-                }
-                UnsetPauseScreen();
+                return;
             }
-            else
+
+            if (PauseScreen != null)
             {
-                if (WinScreen != null && WinScreen.activeSelf)
+                if (PauseScreen.activeSelf)
                 {
-                    return;
+                    UnsetPauseScreen();
                 }
-                SetPauseScreen();
+                else
+                {
+                    SetPauseScreen();
+                }
             }
         }
 
-        // Continue after win screen (Space or Enter)
-        if (WinScreen != null && WinScreen.activeSelf && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)))
+        // Reload Current Level (F5)
+        if (Input.GetKeyDown(KeyCode.F5))
         {
-            if (!string.IsNullOrEmpty(winScreenTargetScene))
+            string currentScene = SceneManager.GetActiveScene().name;
+            SceneManager.LoadScene(currentScene);
+        }
+
+        // Reload Current Level (F1 + F2)
+        if (Input.GetKeyDown(KeyCode.F1) && Input.GetKeyDown(KeyCode.F2))
+        {
+            UnsetPauseScreen();
+            SetWinScreen();
+        }
+
+        // Current Win Screen (Space, Enter, Esc)
+        if (WinScreen != null && WinScreen.activeSelf)
+        {
+            // Next Scene
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
             {
-                SceneManager.LoadScene(winScreenTargetScene);
+                if (!string.IsNullOrEmpty(winScreenTargetScene))
+                {
+                    SceneManager.LoadScene(winScreenTargetScene);
+                }
+                else
+                {
+                    Debug.LogWarning("winScreenTargetScene não foi atribuído.");
+                }
             }
-            else
+            // Phase Selection
+            else if (Input.GetKeyDown(KeyCode.Escape))
             {
-                Debug.LogWarning("winScreenTargetScene não foi atribuído.");
+                SceneManager.LoadScene(levelSelectionScene);
             }
         }
     }
