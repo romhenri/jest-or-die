@@ -28,15 +28,36 @@ public class CanvasController : MonoBehaviour
 
     void Update()
     {
-        // Pause Screen (Esc, P)
+        HandlePauseInput();
+
+        // Reload (F5)
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            ReloadCurrentLevel();
+        }
+
+        // Win (F1 + F2)
+        if (Input.GetKeyDown(KeyCode.F1) && Input.GetKeyDown(KeyCode.F2))
+        {
+            UnsetPauseScreen();
+            SetWinScreen();
+        }
+
+        HandleWinScreenInput();
+
+        HandleLevelSelectionInput();
+    }
+
+    void HandlePauseInput()
+    {
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
         {
             if (WinScreen != null && WinScreen.activeSelf)
             {
-                return;
+                UnsetPauseScreen();
+                NavMainMenu();
             }
-
-            if (PauseScreen != null)
+            else if (PauseScreen != null)
             {
                 if (PauseScreen.activeSelf)
                 {
@@ -48,30 +69,17 @@ public class CanvasController : MonoBehaviour
                 }
             }
         }
+    }
 
-        // Reload Current Level (F5)
-        if (Input.GetKeyDown(KeyCode.F5))
-        {
-            string currentScene = SceneManager.GetActiveScene().name;
-            SceneManager.LoadScene(currentScene);
-        }
-
-        // Reload Current Level (F1 + F2)
-        if (Input.GetKeyDown(KeyCode.F1) && Input.GetKeyDown(KeyCode.F2))
-        {
-            UnsetPauseScreen();
-            SetWinScreen();
-        }
-
-        // Current Win Screen (Space, Enter, Tab)
+    void HandleWinScreenInput()
+    {
         if (WinScreen != null && WinScreen.activeSelf)
         {
-            // Next Scene
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
             {
                 if (!string.IsNullOrEmpty(winScreenTargetScene))
                 {
-                    SceneManager.LoadScene(winScreenTargetScene);
+                    NextLevel();
                 }
                 else
                 {
@@ -79,12 +87,12 @@ public class CanvasController : MonoBehaviour
                 }
             }
         }
+    }
 
-        // Phase Selection
-        if (
-            (PauseScreen != null && PauseScreen.activeSelf) ||
-            (WinScreen != null && WinScreen.activeSelf)
-          )  
+    void HandleLevelSelectionInput()
+    {
+        if ((PauseScreen != null && PauseScreen.activeSelf) ||
+            (WinScreen != null && WinScreen.activeSelf))
         {
             if (Input.GetKeyDown(KeyCode.Tab))
             {
@@ -92,6 +100,12 @@ public class CanvasController : MonoBehaviour
                 SceneManager.LoadScene(levelSelectionScene);
             }
         }
+    }
+
+    void ReloadCurrentLevel()
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentScene);
     }
 
     public void SetWinScreen()
@@ -192,6 +206,11 @@ public class CanvasController : MonoBehaviour
         {
             mainCameraAudio.Play();
         }
+    }
+
+    public void NextLevel()
+    {
+        SceneManager.LoadScene(winScreenTargetScene);
     }
 
     public void NavMainMenu()
