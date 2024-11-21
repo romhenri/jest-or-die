@@ -1331,7 +1331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9c4a5b3a0a1d16458859f9dc32a9f63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugMode: 1
+  debugMode: 0
   sounds: 1
 --- !u!4 &287335399
 Transform:
@@ -4128,6 +4128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45ba630074c0f5f4da3324af45848489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelButtons: []
 --- !u!1 &740511028
 GameObject:
   m_ObjectHideFlags: 0

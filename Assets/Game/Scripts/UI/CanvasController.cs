@@ -193,4 +193,10 @@ public class CanvasController : MonoBehaviour
             mainCameraAudio.Play();
         }
     }
+
+    public void NavMainMenu()
+    {
+        UnsetPauseScreen();
+        SceneManager.LoadScene(levelSelectionScene);
+    }
 }
