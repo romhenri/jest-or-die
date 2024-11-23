@@ -7099,6 +7099,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0.7300014
       objectReference: {fileID: 0}
+    - target: {fileID: 1009623301592718485, guid: eb4aef7948f4bf74a82f9379a6f7eaa1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.75
+      objectReference: {fileID: 0}
     - target: {fileID: 2621204495873681901, guid: eb4aef7948f4bf74a82f9379a6f7eaa1, type: 3}
       propertyPath: m_Name
       value: DoubleBulletSpawner

@@ -2307,6 +2307,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0.7300014
       objectReference: {fileID: 0}
+    - target: {fileID: 1009623301592718485, guid: eb4aef7948f4bf74a82f9379a6f7eaa1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1918632367772715623, guid: eb4aef7948f4bf74a82f9379a6f7eaa1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2621204495873681901, guid: eb4aef7948f4bf74a82f9379a6f7eaa1, type: 3}
       propertyPath: m_Name
       value: DoubleBulletSpawner
@@ -2350,6 +2358,10 @@ PrefabInstance:
     - target: {fileID: 3120033055800832235, guid: eb4aef7948f4bf74a82f9379a6f7eaa1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4442788484529834126, guid: eb4aef7948f4bf74a82f9379a6f7eaa1, type: 3}
+      propertyPath: movements.Array.data[0].targetPosition.y
+      value: 4.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
