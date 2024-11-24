@@ -16,16 +16,21 @@ public class SpikeDamage : MonoBehaviour
         animator = GetComponent<Animator>();
         spikeCollider = GetComponent<Collider2D>();
 
+        if (animator == null)
+            Debug.LogError("Animator component is missing!");
+
+        if (spikeCollider == null)
+            Debug.LogError("Collider2D component is missing!");
+
         if (isLooping)
         {
             timer = timing;
         }
         UpdateSpikeState();
     }
-
     private void Update()
     {
-        if (isLooping)
+        if (isLooping && timing > 0)
         {
             timer -= Time.deltaTime;
             if (timer <= 0)
@@ -36,11 +41,16 @@ public class SpikeDamage : MonoBehaviour
             }
         }
     }
-
     private void UpdateSpikeState()
     {
-        animator.SetBool("isActive", active);
-        spikeCollider.enabled = active;
+        if (animator != null)
+        {
+            animator.SetBool("isActive", active);
+        }
+        if (spikeCollider != null)
+        {
+            spikeCollider.enabled = active;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
