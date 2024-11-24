@@ -12,7 +12,7 @@
 
 -   [x] MVP;
 -   [x] Músicas;
--   [ ] Fases;
+-   [x] Fases;
 -   [ ] Save.
 
 <hr>

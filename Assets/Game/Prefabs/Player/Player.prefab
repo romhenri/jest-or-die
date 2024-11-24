@@ -150,8 +150,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.27953282}
-  m_Size: {x: 1, y: 1.9033157}
+  m_Offset: {x: 0, y: -0.28897223}
+  m_Size: {x: 1.009919, y: 1.9221945}
   m_Direction: 0
 --- !u!114 &3823496295610251800
 MonoBehaviour:
@@ -183,7 +183,7 @@ MonoBehaviour:
   jumpPeakTime: 0.4
   jumpAbortDecceleration: 100
   crouchCapsuleHeightPercent: 0.5
-  crouchGroundSpeedPercent: 0.3
+  crouchGroundSpeedPercent: 0.01
   groundedLayerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -204,10 +204,15 @@ MonoBehaviour:
   animator: {fileID: 7853993481712525052}
   hudManager: {fileID: 0}
   canvasController: {fileID: 0}
+  blood: {fileID: 2969109559910344869, guid: 8351ac7e73ace1b409c5e99aeb0c4099, type: 3}
+  collectParticles: {fileID: 0}
   AudioSource: {fileID: 7541222589396991267}
   audioJump: {fileID: 8300000, guid: 4c6a6c7193b3a194683177bc93586935, type: 3}
   audioHurt: {fileID: 8300000, guid: c8cf54981ae997d47b30b492b47e172d, type: 3}
   audioGet: {fileID: 8300000, guid: ba79acb2cfa34934baa90ca00b6d0f3d, type: 3}
+  currentPlatformEffector: {fileID: 0}
+  dropWaitTime: 0.2
+  downwardForce: 10
 --- !u!95 &7853993481712525052
 Animator:
   serializedVersion: 5

@@ -8,49 +8,125 @@ public class CanvasController : MonoBehaviour
     public GameObject WinScreen;
     public GameObject PauseScreen;
 
-    public string winScreenTargetScene = "MainMenu";
+    public string winScreenTargetScene;
+    public string levelSelectionScene;
+
+    public int level = -1;
+    public int coinsAvailable = 4;
 
     void Start()
     {
-        Timer.instance.StartTimer();
+        if (Timer.instance != null)
+        {
+            Timer.instance.StartTimer();
+        }
+        else
+        {
+            Debug.LogWarning("Timer instance is null. Make sure Timer is initialized.");
+        }
     }
 
     void Update()
     {
-        // Toggle pause screen
+        HandlePauseInput();
+
+        // Reload (F5)
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            ReloadCurrentLevel();
+        }
+
+        // Win (F1 + F2)
+        if (Input.GetKeyDown(KeyCode.F1) && Input.GetKeyDown(KeyCode.F2))
+        {
+            UnsetPauseScreen();
+            SetWinScreen();
+        }
+
+        HandleWinScreenInput();
+
+        HandleLevelSelectionInput();
+    }
+
+    void HandlePauseInput()
+    {
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
         {
-            if (PauseScreen.activeSelf)
+            if (WinScreen != null && WinScreen.activeSelf)
             {
-                if (WinScreen.activeSelf)
-                {
-                    return;
-                }
-
                 UnsetPauseScreen();
+                NavMainMenu();
             }
-            else
+            else if (PauseScreen != null)
             {
-                if (WinScreen.activeSelf)
+                if (PauseScreen.activeSelf)
                 {
-                    return;
+                    UnsetPauseScreen();
                 }
-
-                SetPauseScreen();
+                else
+                {
+                    SetPauseScreen();
+                }
             }
         }
+    }
 
-        // Continue after win screen (Space or Enter)
-        if (WinScreen.activeSelf && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)))
+    void HandleWinScreenInput()
+    {
+        if (WinScreen != null && WinScreen.activeSelf)
         {
-            SceneManager.LoadScene(winScreenTargetScene);
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+            {
+                if (!string.IsNullOrEmpty(winScreenTargetScene))
+                {
+                    NextLevel();
+                }
+                else
+                {
+                    Debug.LogWarning("winScreenTargetScene não foi atribuído.");
+                }
+            }
         }
+    }
+
+    void HandleLevelSelectionInput()
+    {
+        if ((PauseScreen != null && PauseScreen.activeSelf) ||
+            (WinScreen != null && WinScreen.activeSelf))
+        {
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                UnsetPauseScreen();
+                SceneManager.LoadScene(levelSelectionScene);
+            }
+        }
+    }
+
+    void ReloadCurrentLevel()
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentScene);
     }
 
     public void SetWinScreen()
     {
-        WinScreen.SetActive(true);
-        Timer.instance.StopTimer();
+        if (WinScreen != null)
+        {
+            WinScreen.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning("WinScreen GameObject is not assigned.");
+        }
+
+        if (Timer.instance != null)
+        {
+            Timer.instance.StopTimer();
+        }
+        else
+        {
+            Debug.LogWarning("Timer instance is null.");
+        }
 
         // Stop all spawners
         GameObject[] spawners = GameObject.FindGameObjectsWithTag("Spawner");
@@ -58,27 +134,88 @@ public class CanvasController : MonoBehaviour
         {
             spawner.SetActive(false);
         }
+
         // Destroy all knives
         GameObject[] knives = GameObject.FindGameObjectsWithTag("Knife");
         foreach (GameObject knife in knives)
         {
             Destroy(knife);
         }
+
+        if (GameController.instance != null)
+        {
+            int _level = GameController.instance.GetLevel();
+            if (level > _level)
+            {
+                GameController.instance.SetLevel(level);
+            }
+            GameController.instance.IncreaseCoins(coinsAvailable);
+            //GameController.instance.SaveNow();
+        }
+        else
+        {
+            Debug.LogWarning("GameController instance is null. Make sure GameController is initialized.");
+        }
     }
 
     public void SetPauseScreen()
     {
-        PauseScreen.SetActive(true);
-        Timer.instance.StopTimer();
+        if (PauseScreen != null)
+        {
+            PauseScreen.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning("PauseScreen GameObject is not assigned.");
+        }
+
+        if (Timer.instance != null)
+        {
+            Timer.instance.StopTimer();
+        }
+
         Time.timeScale = 0;
-        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>().Pause();
+
+        AudioSource mainCameraAudio = GameObject.FindGameObjectWithTag("MainCamera")?.GetComponent<AudioSource>();
+        if (mainCameraAudio != null)
+        {
+            mainCameraAudio.Pause();
+        }
+        else
+        {
+            Debug.LogWarning("MainCamera or AudioSource component is missing.");
+        }
     }
 
     public void UnsetPauseScreen()
     {
-        PauseScreen.SetActive(false);
-        Timer.instance.ResetTimer();
+        if (PauseScreen != null)
+        {
+            PauseScreen.SetActive(false);
+        }
+
+        if (Timer.instance != null)
+        {
+            Timer.instance.ResetTimer();
+        }
+
         Time.timeScale = 1;
-        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>().Play();
+
+        AudioSource mainCameraAudio = GameObject.FindGameObjectWithTag("MainCamera")?.GetComponent<AudioSource>();
+        if (mainCameraAudio != null)
+        {
+            mainCameraAudio.Play();
+        }
+    }
+
+    public void NextLevel()
+    {
+        SceneManager.LoadScene(winScreenTargetScene);
+    }
+
+    public void NavMainMenu()
+    {
+        UnsetPauseScreen();
+        SceneManager.LoadScene(levelSelectionScene);
     }
 }

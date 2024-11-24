@@ -39,7 +39,6 @@ public class SpikeDamage : MonoBehaviour
 
     private void UpdateSpikeState()
     {
-        // Atualiza o estado de animação e colisão
         animator.SetBool("isActive", active);
         spikeCollider.enabled = active;
     }
@@ -49,9 +48,13 @@ public class SpikeDamage : MonoBehaviour
         if (active && other.CompareTag("Player"))
         {
             var playerController = other.GetComponent<PlayerController>();
+
             if (playerController != null)
             {
                 playerController.ReceiveDamage();
+
+                Vector2 contactPoint = transform.position;
+                playerController.SpawnBlood(contactPoint);
             }
         }
     }

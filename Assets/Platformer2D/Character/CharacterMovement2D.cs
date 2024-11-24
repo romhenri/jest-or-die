@@ -20,7 +20,7 @@ namespace Platformer2D.Character
         [SerializeField] float crouchCapsuleHeightPercent = 0.5f;
 
         [Range(0.0f, 1.0f)]
-        [SerializeField] float crouchGroundSpeedPercent = 0.3f;
+        [SerializeField] float crouchGroundSpeedPercent = 0.01f;
 
         [Space]
 
@@ -33,7 +33,7 @@ namespace Platformer2D.Character
         ContactFilter2D contactFilter;
 
         public IColliderInfo ColliderInfo { get; private set; }
-        bool isGrounded;
+        bool isGrounded = true;
         bool isCrouching;
         bool wantsToUnCrouch;
         bool wasGroundedLastFrame;
@@ -91,18 +91,32 @@ namespace Platformer2D.Character
             Vector2 currentPosition = previousPosition + currentVelocity * Time.fixedDeltaTime;
             rigidbody2d.MovePosition(currentPosition);
 
-            CheckCapsuleCollisionsBottom();
+            if (currentVelocity.y <= 0)
+            {
+                CheckCapsuleCollisionsBottom();
+            }
+
+            if (currentVelocity.y > 0)
+            {
+                CheckCapsuleCollisionsTop();
+            }
+
+            if (currentVelocity.x != 0)
+            {
+                CheckCapsuleCollisionsWalls();
+            }
 
             CheckUnCrouch();
-
         }
+
 
         void ApplyGravity()
         {
-            currentVelocity.y -= Gravity * Time.fixedDeltaTime;
+            float maxFallSpeed = -16.0f;
+            currentVelocity.y = Mathf.Max(currentVelocity.y - Gravity * Time.fixedDeltaTime, maxFallSpeed);
         }
 
-        protected bool CanJump()
+        public bool CanJump()
         {
             return IsGrounded && !IsJumping && !IsCrouching;
         }
@@ -167,65 +181,84 @@ namespace Platformer2D.Character
             SetCapsuleHeight(ColliderInfo.Size.y / crouchCapsuleHeightPercent);
         }
 
-        void CheckCapsuleCollisionsBottom()
+        private static readonly RaycastHit2D[] hitBuffer = new RaycastHit2D[5];
+        private static readonly Vector2[] raycastPositions = new Vector2[3];
+        private const int raycastCount = 3;
+
+        bool CheckCapsuleCollisions(Vector2 basePosition, Vector2 direction, out int hitCount, bool earlyReturn = false)
         {
-            int raycastCount = 3;
-            Vector2[] raycastPositions = new Vector2[raycastCount];
+            float offset = ColliderInfo.Size.x * 0.5f;
 
-            raycastPositions[0] = GetColliderBottom() + Vector2.left * ColliderInfo.Size.x * 0.5f;
-            raycastPositions[1] = GetColliderBottom();
-            raycastPositions[2] = GetColliderBottom() + Vector2.right * ColliderInfo.Size.x * 0.5f;
+            raycastPositions[0] = basePosition + Vector2.left * offset;
+            raycastPositions[1] = basePosition;
+            raycastPositions[2] = basePosition + Vector2.right * offset;
 
-            RaycastHit2D[] hitBuffer = new RaycastHit2D[5];
-            float raycastDistance = ColliderInfo.Size.x * 0.5f + groundedRaycastDistance * 2f;
-            Vector2 raycastDirection = Vector2.down;
+            float raycastDistance = offset + groundedRaycastDistance * 2f;
+            hitCount = 0;
 
-            wasGroundedLastFrame = isGrounded;
-            isGrounded = false;
-
-            int hitCount = 0;
-            for (int i = 0; i < raycastPositions.Length; i++)
+            for (int i = 0; i < raycastCount; i++)
             {
-                Debug.DrawLine(raycastPositions[i], raycastPositions[i] + raycastDirection * raycastDistance);
-                if (Physics2D.Raycast(raycastPositions[i], raycastDirection, contactFilter, hitBuffer, raycastDistance) > 0)
+                Debug.DrawLine(raycastPositions[i], raycastPositions[i] + direction * raycastDistance, Color.red);
+
+                if (Physics2D.RaycastNonAlloc(raycastPositions[i], direction, hitBuffer, raycastDistance, contactFilter.layerMask) > 0)
                 {
-                    ++hitCount;
+                    hitCount++;
+                    if (earlyReturn)
+                        return true;
                 }
             }
 
-            isGrounded = currentVelocity.magnitude > 10.0f ? hitCount == 3 : hitCount > 0;
-            
+            return hitCount > 0;
+        }
+
+        bool CheckCapsuleCollisionsTop()
+        {
+            int hitCount;
+            return CheckCapsuleCollisions(GetColliderTop(), Vector2.up, out hitCount, earlyReturn: true);
+        }
+
+        void CheckCapsuleCollisionsBottom()
+        {
+            int hitCount;
+            bool hasCollision = CheckCapsuleCollisions(GetColliderBottom(), Vector2.down, out hitCount);
+
+            wasGroundedLastFrame = isGrounded;
+            isGrounded = hitCount > 0;
+
             if (isGrounded && !IsJumping)
             {
                 currentVelocity.y = 0;
             }
         }
 
-        bool CheckCapsuleCollisionsTop()
+        bool CheckCapsuleCollisionsWalls()
         {
-            int raycastCount = 3;
-            Vector2[] raycastPositions = new Vector2[raycastCount];
+            int leftHitCount;
+            int rightHitCount;
 
-            raycastPositions[0] = GetColliderTop() + Vector2.left * ColliderInfo.Size.x * 0.5f;
-            raycastPositions[1] = GetColliderTop();
-            raycastPositions[2] = GetColliderTop() + Vector2.right * ColliderInfo.Size.x * 0.5f;
+            bool isLeftWallHit = CheckCapsuleCollisions(GetColliderLeft(), Vector2.left, out leftHitCount);
 
-            RaycastHit2D[] hitBuffer = new RaycastHit2D[5];
-            float raycastDistance = ColliderInfo.Size.x * 0.5f + groundedRaycastDistance * 2f;
-            Vector2 raycastDirection = Vector2.up;
+            bool isRightWallHit = CheckCapsuleCollisions(GetColliderRight(), Vector2.right, out rightHitCount);
 
-            int hitCount = 0;
-            for (int i = 0; i < raycastPositions.Length; i++)
-            {
-                Debug.DrawLine(raycastPositions[i], raycastPositions[i] + raycastDirection * raycastDistance);
-                if (Physics2D.Raycast(raycastPositions[i], raycastDirection, contactFilter, hitBuffer, raycastDistance) > 0)
-                {
-                    ++hitCount;
-                }
-            }
-
-            return hitCount > 0;
+            return isLeftWallHit || isRightWallHit;
         }
+
+        Vector2 GetColliderLeft()
+        {
+            return new Vector2(GetColliderCenter().x - ColliderInfo.Size.x * 0.5f, GetColliderCenter().y);
+        }
+
+        Vector2 GetColliderRight()
+        {
+            return new Vector2(GetColliderCenter().x + ColliderInfo.Size.x * 0.5f, GetColliderCenter().y);
+        }
+
+        Vector2 GetColliderCenter()
+        {
+            return (Vector2)transform.position + ColliderInfo.Offset;
+        }
+
+
         bool CanCrouch()
         {
             return IsCrouching == false;

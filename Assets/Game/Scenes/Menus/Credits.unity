@@ -4846,10 +4846,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firstLevel: 
+  menu: MainMenu
   credits: Credits
-  scene: 
-  scene2: Credits
-  scene3: 
+  options: 
+  level1: 
+  level2: 
+  level3: 
+  level4: 
+  mainMenu: {fileID: 0}
+  levelSelection: {fileID: 0}
 --- !u!1 &1736318491
 GameObject:
   m_ObjectHideFlags: 0
