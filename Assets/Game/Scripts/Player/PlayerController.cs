@@ -90,12 +90,9 @@ public class PlayerController : MonoBehaviour
 
     private void HandleJump()
     {
-
-        if (playerInput.isJumpButtonDown())
+        if (playerInput.isJumpButtonDown() || playerInput.isJumpButtonHeld())
         {
-            animator.SetBool("isJumping", true);
             playerMovement.Jump();
-            AudioSource.PlayOneShot(audioJump);
         }
 
         if (!playerMovement.IsJumping)

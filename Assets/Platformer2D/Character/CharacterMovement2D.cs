@@ -34,6 +34,7 @@ namespace Platformer2D.Character
 
         public IColliderInfo ColliderInfo { get; private set; }
         bool isGrounded = true;
+        bool jumpHeldSinceAir = false;
         bool isCrouching;
         bool wantsToUnCrouch;
         bool wasGroundedLastFrame;
@@ -131,14 +132,20 @@ namespace Platformer2D.Character
         {
             currentVelocity = Vector2.zero;
         }
- 
+
         public void Jump()
         {
             if (CanJump())
             {
                 currentVelocity.y = JumpSpeed;
+                jumpHeldSinceAir = false;
+            }
+            else
+            {
+                jumpHeldSinceAir = true;
             }
         }
+
         public void UpdateJumpAbort()
         {
             if (IsJumping)
@@ -224,6 +231,11 @@ namespace Platformer2D.Character
 
             wasGroundedLastFrame = isGrounded;
             isGrounded = hitCount > 0;
+
+            if (isGrounded && !wasGroundedLastFrame && jumpHeldSinceAir)
+            {
+                Jump();
+            }
 
             if (isGrounded && !IsJumping)
             {
