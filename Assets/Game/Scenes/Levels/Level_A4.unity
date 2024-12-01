@@ -7066,7 +7066,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WinScreen: {fileID: 513459091}
   PauseScreen: {fileID: 537427635}
-  winScreenTargetScene: MainMenu
+  winScreenTargetScene: Level_A5
   levelSelectionScene: MainMenu
   level: 4
   coinsAvailable: 4
