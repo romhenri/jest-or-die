@@ -16,6 +16,7 @@ public class MenuBehavior : MonoBehaviour
     public string level2;
     public string level3;
     public string level4;
+    public string level5;
 
     [Header("UI")]
     [SerializeField] public GameObject mainMenu;
@@ -81,6 +82,11 @@ public class MenuBehavior : MonoBehaviour
     public void Level4()
     {
         SceneManager.LoadScene(level4);
+    }
+
+    public void Level5()
+    {
+        SceneManager.LoadScene(level5);
     }
 
     public void QuitGame()

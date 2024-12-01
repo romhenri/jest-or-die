@@ -63,7 +63,7 @@ public class GameController : MonoBehaviour
 
     public void ApplySoundSettings()
     {
-        AudioListener.volume = sounds ? 1f : 0f;
+        AudioListener.volume = sounds ? 0.8f : 0f;
     }
 
     [Serializable]

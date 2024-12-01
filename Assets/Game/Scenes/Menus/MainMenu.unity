@@ -180,7 +180,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '-'
+  m_text: Level 5
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 765df32c1dfb79d4cbcff109414a4414, type: 2}
   m_sharedMaterial: {fileID: 3605429918757675624, guid: 765df32c1dfb79d4cbcff109414a4414, type: 2}
@@ -447,7 +447,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: beta1.5.1
+  m_text: beta1.6
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e81b69986196ab742a14f45c19774e94, type: 2}
   m_sharedMaterial: {fileID: 8853546235773599000, guid: e81b69986196ab742a14f45c19774e94, type: 2}
@@ -1559,7 +1559,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 438631380}
   m_OnClick:
     m_PersistentCalls:
@@ -4128,7 +4128,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45ba630074c0f5f4da3324af45848489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelButtons: []
+  levelButtons:
+  - {fileID: 1373686561}
+  - {fileID: 1773650399}
+  - {fileID: 62569715}
+  - {fileID: 398934211}
+  - {fileID: 438631379}
 --- !u!1 &740511028
 GameObject:
   m_ObjectHideFlags: 0
@@ -4299,6 +4304,7 @@ MonoBehaviour:
   level2: PreLvl_A2
   level3: Level_A3
   level4: Level_A4
+  level5: Level_A5
   mainMenu: {fileID: 957793983}
   levelSelection: {fileID: 709927593}
   aboutGame: {fileID: 1526768160}
